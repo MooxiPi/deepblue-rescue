@@ -151,7 +151,7 @@ para observar el contenedor mientras los tests estan corriendo.
 
 ## Pruebas incluidas
 
-`PersistenceIntegrationTest` comprueba, entre otras cosas:
+`PersistenceIntegrationIT` comprueba, entre otras cosas:
 
 - ejecucion de migraciones Flyway;
 - metodos heredados de `JpaRepository`;

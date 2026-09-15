@@ -32,4 +32,5 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
             @Param("status") RescueStatus status,
             @Param("expertise") String expertise
     );
+
 }
