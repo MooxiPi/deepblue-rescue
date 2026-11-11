@@ -13,6 +13,9 @@ export default function ChangeStatus({ caseItem, onChanged }) {
     onSuccess: (updatedCase) => {
       // Todas las listas por estado quedaron desactualizadas
       queryClient.invalidateQueries({ queryKey: ['rescue-cases'] })
+      // El animal muestra rescueStatus y la elegibilidad depende del estado:
+      // también quedaron desactualizados
+      queryClient.invalidateQueries({ queryKey: ['animal', updatedCase.animalCode] })
       onChanged(updatedCase)
     },
   })

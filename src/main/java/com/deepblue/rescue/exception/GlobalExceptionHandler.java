@@ -105,6 +105,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleUnexpected(Exception ex) {
 
+        // Excepciones propias de Spring MVC (405 metodo no soportado,
+        // 415 Content-Type no soportado, 406...) ya traen su codigo HTTP:
+        // se respeta en lugar de convertirlas en 500.
+        if (ex instanceof org.springframework.web.ErrorResponse springError) {
+            HttpStatus status = HttpStatus.resolve(
+                    springError.getStatusCode().value()
+            );
+            if (status != null && status.is4xxClientError()) {
+                return build(status, ex.getMessage(), Map.of());
+            }
+        }
+
         log.error("Unexpected error", ex);
         return build(
                 HttpStatus.INTERNAL_SERVER_ERROR,
